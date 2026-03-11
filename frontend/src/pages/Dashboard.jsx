@@ -17,7 +17,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     const fetchProducts = () => {
-        fetch('http://localhost:5000/api/getall')
+        fetch('https://online-eqat.onrender.com/api/getall')
             .then(res => res.json())
             .then(data => {
                 let productList = [];
@@ -75,7 +75,7 @@ const Dashboard = () => {
             cancelButtonText: 'បោះបង់'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/api/delete/${id}`, { method: 'DELETE' })
+                fetch(`https://online-eqat.onrender.com/api/delete/${id}`, { method: 'DELETE' })
                     .then(res => res.json())
                     .then(() => {
                         Swal.fire('លុបរួចរាល់!', 'ផលិតផលត្រូវបានលុប។', 'success');
@@ -131,7 +131,7 @@ const Dashboard = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('http://localhost:5000/api/create', {
+                fetch('https://online-eqat.onrender.com/api/create', {
                     method: 'POST',
                     body: result.value
                 })
@@ -159,7 +159,7 @@ const Dashboard = () => {
                 <input id="swal-sizes" class="swal2-input" placeholder='ទំហំ (ឧទាហរណ៍: ["S", "M"])' value='${JSON.stringify(product.sizes || [])}'>
                 <input id="swal-image" type="file" class="swal2-file" onchange="const f=this.files[0]; if(f){ if(f.type.startsWith('image/')){ const fr=new FileReader(); fr.onload=(e)=>document.getElementById('preview-img').src=e.target.result; fr.readAsDataURL(f); document.getElementById('preview-img').classList.remove('hidden'); document.getElementById('file-name').classList.add('hidden'); } else { document.getElementById('preview-img').classList.add('hidden'); document.getElementById('file-name').textContent=f.name; document.getElementById('file-name').classList.remove('hidden'); } }">
                 <div id="image-preview" class="mt-4 flex flex-col items-center">
-                    <img id="preview-img" src="${product.image ? (product.image.startsWith('http') ? product.image : `http://localhost:5000/image/${product.image}`) : ''}" class="w-32 h-32 object-cover rounded-xl border border-emerald-100 ${product.image ? '' : 'hidden'}">
+                    <img id="preview-img" src="${product.image ? (product.image.startsWith('http') ? product.image : `https://online-eqat.onrender.com/image/${product.image}`) : ''}" class="w-32 h-32 object-cover rounded-xl border border-emerald-100 ${product.image ? '' : 'hidden'}">
                     <div id="file-name" class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 ${product.image && !(product.image.endsWith('.jpg') || product.image.endsWith('.png') || product.image.endsWith('.jpeg')) ? '' : 'hidden'}">${product.image || ''}</div>
                 </div>
                 <textarea id="swal-desc" class="swal2-textarea" placeholder="ការពិពណ៌នា">${product.description || ''}</textarea>
@@ -191,7 +191,7 @@ const Dashboard = () => {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/api/update/${product.id}`, {
+                fetch(`https://online-eqat.onrender.com/api/update/${product.id}`, {
                     method: 'PUT',
                     body: result.value
                 })
@@ -286,7 +286,7 @@ const Dashboard = () => {
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-xl overflow-hidden border border-emerald-100 flex-shrink-0 relative">
                                                     <img
-                                                        src={product.image ? (product.image.startsWith('http') ? product.image : `http://localhost:5000/image/${product.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
+                                                        src={product.image ? (product.image.startsWith('http') ? product.image : `https://online-eqat.onrender.com/image/${product.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
                                                         alt={product.name}
                                                         className="w-full h-full object-cover transition-all"
                                                         onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'; }}

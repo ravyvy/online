@@ -10,7 +10,7 @@ const Detail = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:5000/api/getall')
+    fetch('https://online-eqat.onrender.com/api/getall')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -90,7 +90,7 @@ const Detail = () => {
           <div className="w-full lg:w-1/2">
             <div className="relative glass p-4 rounded-[3rem] overflow-hidden group border border-emerald-50 shadow-sm bg-gray-50/50">
               <img
-                src={product.image ? (product.image.startsWith('http') ? product.image : `http://localhost:5000/image/${product.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
+                src={product.image ? (product.image.startsWith('http') ? product.image : `https://online-eqat.onrender.com/image/${product.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
                 alt={product.name}
                 className="w-full aspect-[4/5] object-cover rounded-[2.5rem] shadow-xl transition-all duration-700 group-hover:scale-105"
                 onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'; }}

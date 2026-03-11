@@ -323,7 +323,7 @@ ${orderDetails}
                             <div key={`${item.id}-${item.selectedSize}`} className="flex gap-8 group glass-card p-6 rounded-[2rem] border border-emerald-50 bg-gray-50/30">
                                 <div className="w-32 h-32 rounded-2xl overflow-hidden border border-emerald-100 flex-shrink-0 relative group-hover:shadow-2xl transition-all duration-500 bg-emerald-50/30">
                                     <img
-                                        src={item.image ? (item.image.startsWith('http') ? item.image : `http://localhost:5000/image/${item.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
+                                        src={item.image ? (item.image.startsWith('http') ? item.image : `https://online-eqat.onrender.com/image/${item.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
                                         alt={item.name}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'; }}

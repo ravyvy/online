@@ -13,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/getall')
+    fetch('https://online-eqat.onrender.com/api/getall')
       .then(res => res.json())
       .then(data => {
         // Handle cases where data might be an object containing products array
