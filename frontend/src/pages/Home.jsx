@@ -5,18 +5,51 @@ import Av from '../components/av';
 import Dress from '../components/dress';
 import Pagination from '../components/Pagination';
 
+const SkeletonCard = () => (
+  <div className="rounded-2xl overflow-hidden border border-emerald-100 bg-white/60 animate-pulse">
+    <div className="aspect-[3/4] bg-gradient-to-br from-emerald-50 to-emerald-100/60" />
+    <div className="p-4 space-y-3">
+      <div className="h-3 bg-emerald-100 rounded-full w-3/4" />
+      <div className="h-3 bg-emerald-50 rounded-full w-1/2" />
+      <div className="h-8 bg-emerald-100 rounded-full w-full mt-4" />
+    </div>
+  </div>
+);
+
+const SkeletonHero = () => (
+  <div className="max-w-7xl mx-auto mb-20 relative rounded-[2rem] md:rounded-[3rem] overflow-hidden min-h-[500px] md:aspect-[21/9] glass-card flex items-center p-8 md:p-16 border border-emerald-50/50 shadow-2xl shadow-emerald-900/5 animate-pulse">
+    <div className="relative z-10 max-w-2xl space-y-6 md:space-y-8 w-full">
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-[2px] bg-emerald-200 rounded" />
+        <div className="h-3 bg-emerald-100 rounded-full w-40" />
+      </div>
+      <div className="space-y-3">
+        <div className="h-10 bg-emerald-100 rounded-2xl w-3/4" />
+        <div className="h-10 bg-emerald-50 rounded-2xl w-2/3" />
+      </div>
+      <div className="space-y-2">
+        <div className="h-4 bg-gray-100 rounded-full w-full" />
+        <div className="h-4 bg-gray-100 rounded-full w-5/6" />
+        <div className="h-4 bg-gray-100 rounded-full w-4/6" />
+      </div>
+      <div className="h-14 bg-emerald-100 rounded-full w-48 mt-4" />
+    </div>
+  </div>
+);
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('ទាំងអស់');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 12;
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://online-eqat.onrender.com/api/getall')
       .then(res => res.json())
       .then(data => {
-        // Handle cases where data might be an object containing products array
         let productsData = [];
         if (Array.isArray(data)) {
           productsData = data;
@@ -33,8 +66,12 @@ const Home = () => {
           }
         }
         setProducts(productsData);
+        setIsLoading(false);
       })
-      .catch(err => console.error('Error fetching products:', err));
+      .catch(err => {
+        console.error('Error fetching products:', err);
+        setIsLoading(false);
+      });
   }, []);
 
   const handleProductSelect = (id) => {
@@ -52,7 +89,6 @@ const Home = () => {
     ? safeProducts
     : safeProducts.filter(p => p.category === filter);
 
-  // Pagination Logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -100,50 +136,63 @@ const Home = () => {
         </nav>
       </div>
 
-      {/* Hero Section */}
-      {filter === 'ទាំងអស់' && currentPage === 1 && (
-        <div className="max-w-7xl mx-auto mb-20 relative rounded-[2rem] md:rounded-[3rem] overflow-hidden min-h-[500px] md:aspect-[21/9] glass-card flex items-center p-8 md:p-16 group border border-emerald-50/50 shadow-2xl shadow-emerald-900/5">
-          <div className="relative z-10 max-w-2xl space-y-6 md:space-y-8">
-            <div className="flex items-center gap-3">
-              <span className="w-12 h-[2px] bg-emerald-600"></span>
-              <span className="text-emerald-800 text-[10px] md:text-xs font-black uppercase tracking-[0.3em]">Season 2026 Collection</span>
-            </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.1] text-gray-900">
-              Modern Fashion <br />
-              <span className="bg-gradient-to-r from-emerald-600 to-emerald-900 bg-clip-text text-transparent italic">Defining Your Style</span>
-            </h2>
-            <p className="text-gray-500 text-sm md:text-xl font-medium leading-relaxed max-w-lg">
-              Experience the perfect blend of quality and contemporary design. Discover our latest curated essentials today.
-            </p>
-            <div className="flex flex-wrap gap-6 pt-4">
-              <button className="bg-emerald-600 text-white px-10 py-4 md:px-12 md:py-5 rounded-full font-black hover:bg-emerald-700 transition-all active:scale-95 uppercase tracking-widest shadow-2xl shadow-emerald-600/30 text-[10px] md:text-xs">
-                Explore Collection
-              </button>
-            </div>
+      {isLoading ? (
+        <main className="max-w-7xl mx-auto">
+          <SkeletonHero />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </div>
-          <div className="absolute top-0 right-0 w-full h-full opacity-30 group-hover:opacity-40 transition-all duration-1000 scale-105 group-hover:scale-100">
-            <img
-              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80"
-              className="w-full h-full object-cover"
-              alt="Hero"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
-          </div>
-        </div>
-      )}
+        </main>
+      ) : (
+        <>
+          {/* Hero Section */}
+          {filter === 'ទាំងអស់' && currentPage === 1 && (
+            <div className="max-w-7xl mx-auto mb-20 relative rounded-[2rem] md:rounded-[3rem] overflow-hidden min-h-[500px] md:aspect-[21/9] glass-card flex items-center p-8 md:p-16 group border border-emerald-50/50 shadow-2xl shadow-emerald-900/5">
+              <div className="relative z-10 max-w-2xl space-y-6 md:space-y-8">
+                <div className="flex items-center gap-3">
+                  <span className="w-12 h-[2px] bg-emerald-600"></span>
+                  <span className="text-emerald-800 text-[10px] md:text-xs font-black uppercase tracking-[0.3em]">Season 2026 Collection</span>
+                </div>
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-black leading-[1.1] text-gray-900">
+                  Modern Fashion <br />
+                  <span className="bg-gradient-to-r from-emerald-600 to-emerald-900 bg-clip-text text-transparent italic">Defining Your Style</span>
+                </h2>
+                <p className="text-gray-500 text-sm md:text-xl font-medium leading-relaxed max-w-lg">
+                  Experience the perfect blend of quality and contemporary design. Discover our latest curated essentials today.
+                </p>
+                <div className="flex flex-wrap gap-6 pt-4">
+                  <button className="bg-emerald-600 text-white px-10 py-4 md:px-12 md:py-5 rounded-full font-black hover:bg-emerald-700 transition-all active:scale-95 uppercase tracking-widest shadow-2xl shadow-emerald-600/30 text-[10px] md:text-xs">
+                    Explore Collection
+                  </button>
+                </div>
+              </div>
+              <div className="absolute top-0 right-0 w-full h-full opacity-30 group-hover:opacity-40 transition-all duration-1000 scale-105 group-hover:scale-100">
+                <img
+                  src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80"
+                  className="w-full h-full object-cover"
+                  alt="Hero"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
+              </div>
+            </div>
+          )}
 
-      {/* Product List */}
-      <main className="max-w-7xl mx-auto">
-        {getFilteredComponent()}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => {
-            setCurrentPage(page);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
-      </main>
+          {/* Product List */}
+          <main className="max-w-7xl mx-auto">
+            {getFilteredComponent()}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => {
+                setCurrentPage(page);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </main>
+        </>
+      )}
     </div>
   );
 };

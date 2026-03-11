@@ -11,10 +11,10 @@ const Kao = ({ products, onSelect }) => {
                 >
                     <div className="aspect-[4/5] overflow-hidden rounded-2xl mb-6 bg-emerald-50/30 relative group-hover:shadow-2xl transition-all duration-500">
                         <img
-                            src={product.image ? (product.image.startsWith('http') ? product.image : `https://online-eqat.onrender.com/image/${product.image}`) : 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'}
+                            src={product.image ? (product.image.startsWith('http') ? product.image : `https://online-eqat.onrender.com/image/${product.image}`) : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'}
                             alt={product.name}
                             className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
-                            onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80'; }}
+                            onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'; }}
                         />
                         {!product.image && (
                             <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 backdrop-blur-sm">
