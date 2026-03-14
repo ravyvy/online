@@ -5,37 +5,7 @@ import Av from '../components/av';
 import Dress from '../components/dress';
 import Pagination from '../components/Pagination';
 
-const SkeletonCard = () => (
-  <div className="rounded-2xl overflow-hidden border border-emerald-100 bg-white/60 animate-pulse">
-    <div className="aspect-[3/4] bg-gradient-to-br from-emerald-50 to-emerald-100/60" />
-    <div className="p-4 space-y-3">
-      <div className="h-3 bg-emerald-100 rounded-full w-3/4" />
-      <div className="h-3 bg-emerald-50 rounded-full w-1/2" />
-      <div className="h-8 bg-emerald-100 rounded-full w-full mt-4" />
-    </div>
-  </div>
-);
 
-const SkeletonHero = () => (
-  <div className="max-w-7xl mx-auto mb-20 relative rounded-[2rem] md:rounded-[3rem] overflow-hidden min-h-[500px] md:aspect-[21/9] glass-card flex items-center p-8 md:p-16 border border-emerald-50/50 shadow-2xl shadow-emerald-900/5 animate-pulse">
-    <div className="relative z-10 max-w-2xl space-y-6 md:space-y-8 w-full">
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-[2px] bg-emerald-200 rounded" />
-        <div className="h-3 bg-emerald-100 rounded-full w-40" />
-      </div>
-      <div className="space-y-3">
-        <div className="h-10 bg-emerald-100 rounded-2xl w-3/4" />
-        <div className="h-10 bg-emerald-50 rounded-2xl w-2/3" />
-      </div>
-      <div className="space-y-2">
-        <div className="h-4 bg-gray-100 rounded-full w-full" />
-        <div className="h-4 bg-gray-100 rounded-full w-5/6" />
-        <div className="h-4 bg-gray-100 rounded-full w-4/6" />
-      </div>
-      <div className="h-14 bg-emerald-100 rounded-full w-48 mt-4" />
-    </div>
-  </div>
-);
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -137,14 +107,9 @@ const Home = () => {
       </div>
 
       {isLoading ? (
-        <main className="max-w-7xl mx-auto">
-          <SkeletonHero />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        </main>
+        <div className="flex justify-center items-center py-20">
+          <p className="text-xl font-bold text-gray-500 animate-pulse">កំពុងដំណើរការ.........</p>
+        </div>
       ) : (
         <>
           {/* Hero Section */}
